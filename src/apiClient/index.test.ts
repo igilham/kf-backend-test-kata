@@ -3,11 +3,12 @@ import { getAPIKey, getBaseURL } from "../config";
 import { Outage, SiteOutage } from "./types";
 
 describe("apiClient", () => {
+  const client = new OutageClient({
+    baseURL: getBaseURL(),
+    apiKey: getAPIKey(),
+  });
+
   test("can get outages", async () => {
-    const client = new OutageClient({
-      baseURL: getBaseURL(),
-      apiKey: getAPIKey(),
-    });
     const response = await client.getOutages();
 
     expect(response.data.length).toBeGreaterThan(0);
@@ -19,10 +20,6 @@ describe("apiClient", () => {
   });
 
   test("can get site info", async () => {
-    const client = new OutageClient({
-      baseURL: getBaseURL(),
-      apiKey: getAPIKey(),
-    });
     const response = await client.getSiteInfo("norwich-pear-tree");
 
     expect(response.data).toEqual({
@@ -38,10 +35,6 @@ describe("apiClient", () => {
   });
 
   test.skip("can post outages", async () => {
-    const client = new OutageClient({
-      baseURL: getBaseURL(),
-      apiKey: getAPIKey(),
-    });
     const outages: SiteOutage[] = [
       {
         id: "fake-id",
