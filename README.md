@@ -20,4 +20,4 @@ From there I filled out the remaining client API calls and adjusted the tests as
 
 At this point I felt like sketching out the basic flow of the application itself so I wrote the begginings of a crude `main` function in `src/index.ts` to get a feel for the rough code structure that would be needed. This is all throw-away work at this stage.
 
-Next, I started on the filters starting with the date. I wrote a simple check and threw in a couple of basic tests for the boolean result first.
+Next, I started on the filters starting with the date. I wrote a simple check and threw in a couple of basic tests for the boolean result first. Then I replaced these with more representative tests to filter real arrays and renamed the filter function to be clearer.

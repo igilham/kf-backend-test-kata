@@ -1,7 +1,7 @@
 import { OutageClient } from "./apiClient";
 import { SiteOutage } from "./apiClient/types";
 import { getAPIKey, getBaseURL } from "./config";
-import { filterByDate } from "./filters";
+import { filterEarlyOutages } from "./filters";
 
 async function main() {
   const client = new OutageClient({
@@ -9,7 +9,7 @@ async function main() {
     apiKey: getAPIKey(),
   });
   const outages = await client.getOutages();
-  const recentOutages = outages.data.filter(filterByDate);
+  const recentOutages = outages.data.filter(filterEarlyOutages);
   const outagesForSite = recentOutages.filter((outage) => {
     // TODO: filter by site ID
     return true;
