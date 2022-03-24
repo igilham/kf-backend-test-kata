@@ -6,5 +6,6 @@ main(getBaseURL(), getAPIKey(), getSiteId())
     console.log("done");
   })
   .catch((e) => {
-    console.error(e.message ?? "unknown error");
+    const message = e.message ?? "unknown error";
+    console.error(`error encountered: ${message}`);
   });
