@@ -19,3 +19,5 @@ The first technical task was to model the JSON response types from the APIs. The
 From there I filled out the remaining client API calls and adjusted the tests as I went to make sure I understood the API responses and that the calls were getting through to the server. I found that posting fake data to the site-outages endpoint resulted in a 400 response so I skipped the test for the time being. The client tests only really exist to help me figure out how to write and use the client so the responses don't really matter yet.
 
 At this point I felt like sketching out the basic flow of the application itself so I wrote the begginings of a crude `main` function in `src/index.ts` to get a feel for the rough code structure that would be needed. This is all throw-away work at this stage.
+
+Next, I started on the filters starting with the date. I wrote a simple check and threw in a couple of basic tests for the boolean result first.
