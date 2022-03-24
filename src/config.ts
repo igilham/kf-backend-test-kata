@@ -1,5 +1,7 @@
 import { DateTime } from "luxon";
 
+// use functions for config so it's easy to mock them later
+
 export const getBaseURL = () =>
   "https://api.krakenflex.systems/interview-tests-mock-api/v1";
 export const getAPIKey = () => "EltgJ5G8m44IzwE6UN2Y4B4NjPW77Zk6FJK3lL23";
