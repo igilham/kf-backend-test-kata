@@ -10,6 +10,8 @@ npm ci
 
 To build the Typescript code use `npm run build`. To run the linter or auto-format the source code, use `npm run lint` and `npm run fmt`, respectively. The unit tests can be run with `npm t`.
 
+## Running the app
+
 The code can be bundled for distribution using `npm run bundle` and run directly with `npm run start`. The tool can be started in multiple ways:
 
 * `npm run bundle && npm run start`. `start` just calls `node bundle/index.js`
@@ -17,6 +19,8 @@ The code can be bundled for distribution using `npm run bundle` and run directly
 * `npx ts-node src/index.js`
 
 ## Commentary
+
+This section is a bit rambling. I wrote it continuously as a stream of my thoughts while building the project and making commits. It may make more sense to read it piece-by-piece while skimming through the commits in the repo history.
 
 I started by setting up a basic Typescript project with npm and adding a linter. I used a one-line entry-point to make sure the compiler was set up correctly.
 
@@ -37,3 +41,9 @@ Now all the building blocks are in place, we can start trying to run the main fu
 This completes the task and leaves a little cleaning up to do around the tests, refactoring and error handling. I'm running out of time for the final cleanup this evening, but I might also look at logging and general UX in success/failure scenarios. The entry point handles basic errors but not in a very useful of elegant way at present.
 
 I've added a bundler using esbuild to make a small, self-contained distribution.
+
+## Closing thoughts
+
+On the final requirement around handling `500` errors - My code will catch the error, print a pretty useless message and quit at the moment. No harm is done and the user is free to retry. It is possible to add retry loops etc. but that seems overkill for a small command-line-utility.
+
+I also put all the inputs into a config file. I'd expect a tool like this to accept command-line arguments for that purpose but it's probably out of scope for the purpose of the exercise. I've used `commander` for this in the past.
