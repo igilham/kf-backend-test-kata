@@ -1,6 +1,6 @@
 import { OutageClient } from ".";
 import { getAPIKey, getBaseURL } from "../config";
-import { Outage } from "./types";
+import { Outage, SiteOutage } from "./types";
 
 describe("apiClient", () => {
   test("can get outages", async () => {
@@ -34,6 +34,30 @@ describe("apiClient", () => {
           name: "Battery 1",
         }),
       ]),
+    });
+  });
+
+  test.skip("can post outages", async () => {
+    const client = new OutageClient({
+      baseURL: getBaseURL(),
+      apiKey: getAPIKey(),
+    });
+    const outages: SiteOutage[] = [
+      {
+        id: "fake-id",
+        begin: "2022-04-22T12:00:00Z",
+        end: "2022-04-22T13:00:00Z",
+        name: "Battery 1",
+      },
+    ];
+    const response = await client.createSiteOutages(
+      "norwich-pear-tree",
+      outages
+    );
+
+    expect(response.data).toEqual({
+      id: "norwich-pear-tree",
+      name: "Norwich Pear Tree",
     });
   });
 });
