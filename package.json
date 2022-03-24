@@ -2,12 +2,17 @@
   "name": "kf-test-solution",
   "version": "1.0.0",
   "description": "collate and update site outages",
-  "main": "dist/index.js",
+  "main": "bundle/index.js",
+  "files": [
+    "bundle"
+  ],
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
     "fmt": "eslint --fix .",
-    "test": "jest"
+    "start": "node bundle/index.js",
+    "test": "jest",
+    "bundle": "esbuild src/index.ts --bundle --minify --platform=node --target=node14 --outfile=bundle/index.js"
   },
   "author": "Ian Gilham",
   "license": "ISC",
@@ -18,6 +23,7 @@
     "@types/node": "^14.18.12",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
+    "esbuild": "^0.14.27",
     "eslint": "^8.11.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-jest": "^26.1.3",
@@ -30,6 +36,7 @@
   },
   "dependencies": {
     "axios": "^0.26.1",
-    "luxon": "^2.3.1"
+    "luxon": "^2.3.1",
+    "tslib": "^2.3.1"
   }
 }

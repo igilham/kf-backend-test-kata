@@ -8,7 +8,13 @@ This is an NPM project with pinned dependencies so the usual workflow with NPM a
 npm ci
 ```
 
-To build the Typescript code use `npm run build`. To run the linter or auto-format the source code, use `npm run lint` and `npm run fmt`, respectively.
+To build the Typescript code use `npm run build`. To run the linter or auto-format the source code, use `npm run lint` and `npm run fmt`, respectively. The unit tests can be run with `npm t`.
+
+The code can be bundled for distribution using `npm run bundle` and run directly with `npm run start`. The tool can be started in multiple ways:
+
+* `npm run bundle && npm run start`. `start` just calls `node bundle/index.js`
+* `npm run build && node dist/index.js`
+* `npx ts-node src/index.js`
 
 ## Commentary
 
@@ -28,4 +34,6 @@ Mapping device names onto outages last reveals a design problem. The compiler do
 
 Now all the building blocks are in place, we can start trying to run the main function in a test harness and validate the behaviour end-to-end. For this I extracted `main` to a new file and wrote a `nock` test around it with the supplied fake inputs and expected outputs.
 
-This completes the task and leaves a little cleaning up to do around the tests, refactoring and error handling.
+This completes the task and leaves a little cleaning up to do around the tests, refactoring and error handling. I'm running out of time for the final cleanup this evening, but I might also look at logging and general UX in success/failure scenarios. The entry point handles basic errors but not in a very useful of elegant way at present.
+
+I've added a bundler using esbuild to make a small, self-contained distribution.
