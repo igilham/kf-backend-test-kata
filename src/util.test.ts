@@ -1,10 +1,6 @@
 import { Device, Outage } from "./apiClient/types";
 import { getEarliestValidTimestamp } from "./config";
-import {
-  filterEarlyOutages,
-  makeDeviceFilter,
-  makeDeviceNameMapper,
-} from "./util";
+import { filterEarlyOutages, makeDeviceNameMapper } from "./util";
 
 const earlyOutage: Outage = {
   begin: "2020-06-06T00:00:00Z",
@@ -78,18 +74,6 @@ describe("filterEarlyOutages", () => {
       epochOutage,
       lateOutage,
       lateOutage2,
-    ]);
-  });
-});
-
-describe("siteFilter", () => {
-  const filter = makeDeviceFilter(siteInfo);
-
-  test("filters out unmatched devices", () => {
-    expect(outages.filter(filter)).toEqual([
-      earlyOutage,
-      epochOutage,
-      lateOutage,
     ]);
   });
 });

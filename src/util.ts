@@ -7,11 +7,6 @@ export const filterEarlyOutages = (outage: Outage): boolean => {
   return begin >= getEarliestValidTimestamp();
 };
 
-export const makeDeviceFilter =
-  (siteInfo: SiteInfo) =>
-  (outage: Outage): boolean =>
-    !!siteInfo.devices.find((device): boolean => device.id === outage.id);
-
 export const makeDeviceNameMapper =
   (siteInfo: SiteInfo) =>
   (outage: Outage): SiteOutage | undefined => {
