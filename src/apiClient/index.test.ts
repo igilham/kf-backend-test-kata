@@ -1,5 +1,6 @@
 import { OutageClient } from ".";
 import { getAPIKey, getBaseURL } from "../config";
+import { Outage } from "./types";
 
 describe("apiClient", () => {
   test("can get outages", async () => {
@@ -9,11 +10,30 @@ describe("apiClient", () => {
     });
     const response = await client.getOutages();
 
-    expect(response.data).toHaveLength(108);
-    expect(response.data[0]).toEqual({
-      begin: "2022-06-25T13:25:43.022Z",
-      end: "2022-07-07T06:24:28.857Z",
-      id: "032f3efa-8e63-4c42-b3dd-1660ed44ce51",
+    expect(response.data.length).toBeGreaterThan(0);
+    for (const outage of response.data) {
+      expect(outage).toHaveProperty("begin");
+      expect(outage).toHaveProperty("end");
+      expect(outage).toHaveProperty("id");
+    }
+  });
+
+  test("can get site info", async () => {
+    const client = new OutageClient({
+      baseURL: getBaseURL(),
+      apiKey: getAPIKey(),
+    });
+    const response = await client.getSiteInfo("norwich-pear-tree");
+
+    expect(response.data).toEqual({
+      id: "norwich-pear-tree",
+      name: "Norwich Pear Tree",
+      devices: expect.arrayContaining([
+        expect.objectContaining({
+          id: "111183e7-fb90-436b-9951-63392b36bdd2",
+          name: "Battery 1",
+        }),
+      ]),
     });
   });
 });

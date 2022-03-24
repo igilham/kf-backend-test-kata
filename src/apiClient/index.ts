@@ -1,5 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from "axios";
-import { Outage } from "./types";
+import { Outage, SiteInfo } from "./types";
 
 export interface OutageClientOptions {
   baseURL: string;
@@ -20,5 +20,9 @@ export class OutageClient {
 
   async getOutages(): Promise<AxiosResponse<Outage[]>> {
     return this.#client.get("/outages");
+  }
+
+  async getSiteInfo(siteId: string): Promise<AxiosResponse<SiteInfo>> {
+    return this.#client.get(`/site-info/${siteId}`);
   }
 }
