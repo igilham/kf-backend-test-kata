@@ -1,6 +1,6 @@
 import { OutageClient } from ".";
 import { getAPIKey, getBaseURL } from "../config";
-import { Outage, SiteOutage } from "./types";
+import { SiteOutage } from "./types";
 
 describe("apiClient", () => {
   const client = new OutageClient({

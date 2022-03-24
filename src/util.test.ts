@@ -1,6 +1,10 @@
 import { Device, Outage } from "./apiClient/types";
 import { getEarliestValidTimestamp } from "./config";
-import { filterEarlyOutages, makeDeviceFilter } from "./filters";
+import {
+  filterEarlyOutages,
+  makeDeviceFilter,
+  makeDeviceNameMapper,
+} from "./util";
 
 const earlyOutage: Outage = {
   begin: "2020-06-06T00:00:00Z",
@@ -87,5 +91,44 @@ describe("siteFilter", () => {
       epochOutage,
       lateOutage,
     ]);
+  });
+});
+
+describe("deviceNameMapper", () => {
+  const deviceMapper = makeDeviceNameMapper(siteInfo);
+
+  test("maps device names for found devices, dropping others", () => {
+    const result = outages.map(deviceMapper);
+    expect(result).toEqual(
+      expect.arrayContaining([
+        {
+          ...earlyOutage,
+          name: earlyDevice.name,
+        },
+        {
+          ...epochOutage,
+          name: epochDevice.name,
+        },
+        {
+          ...lateOutage,
+          name: lateDevice.name,
+        },
+      ])
+    );
+    expect(result).not.toContainEqual(
+      expect.objectContaining({
+        earlyOutage2,
+      })
+    );
+    expect(result).not.toContainEqual(
+      expect.objectContaining({
+        earlyOutage3,
+      })
+    );
+    expect(result).not.toContainEqual(
+      expect.objectContaining({
+        lateOutage2,
+      })
+    );
   });
 });
