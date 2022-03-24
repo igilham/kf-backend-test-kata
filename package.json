@@ -1,0 +1,19 @@
+{
+  "name": "kf-test-solution",
+  "version": "1.0.0",
+  "description": "collate and update site outages",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest"
+  },
+  "author": "Ian Gilham",
+  "license": "ISC",
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.1",
+    "@types/jest": "^27.4.1",
+    "@types/node": "^14.18.12",
+    "jest": "^27.5.1",
+    "typescript": "^4.6.2"
+  }
+}
