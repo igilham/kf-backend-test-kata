@@ -12,18 +12,23 @@ async function main() {
   const siteInfo = await client.getSiteInfo(getSiteId());
 
   const recentOutages = outages.data.filter(filterEarlyOutages);
-  const outagesForSite = recentOutages.filter(makeDeviceFilter(siteInfo.data));
-  const siteOutages = outagesForSite.map((outage): SiteOutage => {
-    // The compiler doesn't know that we can guarantee a successful find
-    // (assuming the filter is correct), so we cast to Device to tell it to trust us.
-    const device = siteInfo.data.devices.find(
-      (device) => device.id === outage.id
-    ) as Device;
-    return {
-      ...outage,
-      name: device.name,
-    };
-  });
+
+  const siteOutages = recentOutages
+    .map((outage): SiteOutage | undefined => {
+      const device = siteInfo.data.devices.find(
+        (device) => device.id === outage.id
+      );
+      if (device) {
+        return {
+          ...outage,
+          name: device.name,
+        };
+      }
+      // drop entries for which we can't match the device ID
+      return undefined;
+    })
+    .filter((siteOutage) => siteOutage !== undefined) as SiteOutage[];
+
   await client.createSiteOutages("siteId", siteOutages);
 }
 

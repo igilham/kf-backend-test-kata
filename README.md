@@ -24,4 +24,4 @@ Next, I started on the filters starting with the date. I wrote a simple check an
 
 The device ID filter was slightly more complex due to the need to capture the site info object. I used the arrow syntax to curry the function to create the filter and added a suitable test using some of the existing test data.
 
-Mapping device names onto outages last reveals a design problem. The compiler doesn't know that the device can be found. To resolve this we can use `as` to tell it to trust us.
+Mapping device names onto outages last reveals a design problem. The compiler doesn't know that the device can be found. To resolve this we can use `as` to tell it to trust us. This breaks down when we try to refactor out the mapping function, as we can no longer make the same guarantee. At this point it becomes necessary to refactor the main algorithm so that type safety can be maintained. A solution to this is to perform the mapping earlier and simply drop the outages that don't match a device, then filter out the undefined entries in the resulting array.
