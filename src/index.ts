@@ -1,7 +1,7 @@
 import { OutageClient } from "./apiClient";
 import { SiteOutage } from "./apiClient/types";
-import { getAPIKey, getBaseURL } from "./config";
-import { filterEarlyOutages } from "./filters";
+import { getAPIKey, getBaseURL, getSiteId } from "./config";
+import { filterEarlyOutages, makeDeviceFilter } from "./filters";
 
 async function main() {
   const client = new OutageClient({
@@ -9,11 +9,10 @@ async function main() {
     apiKey: getAPIKey(),
   });
   const outages = await client.getOutages();
+  const siteInfo = await client.getSiteInfo(getSiteId());
+
   const recentOutages = outages.data.filter(filterEarlyOutages);
-  const outagesForSite = recentOutages.filter((outage) => {
-    // TODO: filter by site ID
-    return true;
-  });
+  const outagesForSite = recentOutages.filter(makeDeviceFilter(siteInfo.data));
   const siteOutages = outagesForSite.map((outage): SiteOutage => {
     // TODO: transform to correct format
     return {
